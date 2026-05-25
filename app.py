@@ -53,5 +53,32 @@ def add_destination():
 
     return jsonify(new_destination.to_dict()), 201
 
+@app.route("/destinations/<int:destination_id>", methods=["PUT"])
+def update_destination(destination_id):
+    data = request.get_json()
+
+    destination = Destination.query.get(destination_id)
+    if destination:
+        destination.destination = data.get("destination", destination.destination)
+        destination.country = data.get("country", destination.country)
+        destination.rating = data.get("rating", destination.rating)
+
+        db.session.commit()
+
+        return jsonify(destination.to_dict())
+    else:
+        return jsonify ("error 404")
+
+@app.route("/destinations/<int:destination_id>", methods=["DELETE"])
+def delete_destination(destination_id):
+    destination = Destination.query.get(destination_id)
+    if destination:
+        db.session.delete(destination)
+        db.session.commit()
+
+        return jsonify ({"destination deleted"})
+    else:
+        return jsonify({"error"})
+
 if __name__ == "__main__":
     app.run(debug=True)
