@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Travel Destinations</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <h1>TravelTrack</h1>
+      <button class="btn btn-primary" onclick="openModal()">+ Add</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-number" id="total-count">0</span>
+        <span class="stat-label">Destinations</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number" id="avg-rating">—</span>
+        <span class="stat-label">Avg Rating</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number" id="top-country">—</span>
+        <span class="stat-label">Top Country</span>
+      </div>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search..." oninput="filterCards()" />
+    </div>
+
+    <div id="cards-grid" class="cards-grid"></div>
+
+    <div id="empty-state" class="empty-state hidden">
+      <h2>No destinations yet</h2>
+      <p>Add somewhere you want to go.</p>
+      <button class="btn btn-primary" onclick="openModal()">+ Add</button>
+    </div>
+  </main>
+
+  <div id="modal-overlay" class="modal-overlay hidden" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-title">Add Destination</h2>
+        <button class="close-btn" onclick="closeModal()">✕</button>
+      </div>
+      <form id="destination-form" onsubmit="handleSubmit(event)">
+        <input type="hidden" id="edit-id" />
+        <div class="form-group">
+          <label for="input-destination">Destination</label>
+          <input type="text" id="input-destination" placeholder="Paris" required />
+        </div>
+        <div class="form-group">
+          <label for="input-country">Country</label>
+          <input type="text" id="input-country" placeholder="France" required />
+        </div>
+        <div class="form-group">
+          <label for="input-rating">Rating (0–5)</label>
+          <input type="number" id="input-rating" placeholder="4.5" min="0" max="5" step="0.1" required />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submit-btn">Add</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
